@@ -1,0 +1,1 @@
+cmd_/home/pi/device-drivers/native/parameter/parameter.ko := ld -r  -EL  --build-id=sha1  -T scripts/module.lds -o /home/pi/device-drivers/native/parameter/parameter.ko /home/pi/device-drivers/native/parameter/parameter.o /home/pi/device-drivers/native/parameter/parameter.mod.o;  true
