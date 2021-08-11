@@ -1,0 +1,1 @@
+cmd_/home/pi/device-drivers/native/export_symbol/average.ko := ld -r  -EL  --build-id=sha1  -T scripts/module.lds -o /home/pi/device-drivers/native/export_symbol/average.ko /home/pi/device-drivers/native/export_symbol/average.o /home/pi/device-drivers/native/export_symbol/average.mod.o;  true

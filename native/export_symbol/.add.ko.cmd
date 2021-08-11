@@ -1,0 +1,1 @@
+cmd_/home/pi/device-drivers/native/export_symbol/add.ko := ld -r  -EL  --build-id=sha1  -T scripts/module.lds -o /home/pi/device-drivers/native/export_symbol/add.ko /home/pi/device-drivers/native/export_symbol/add.o /home/pi/device-drivers/native/export_symbol/add.mod.o;  true

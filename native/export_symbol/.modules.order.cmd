@@ -1,0 +1,1 @@
+cmd_/home/pi/device-drivers/native/export_symbol/modules.order := {   echo /home/pi/device-drivers/native/export_symbol/add.ko;   echo /home/pi/device-drivers/native/export_symbol/average.ko; :; } | awk '!x[$$0]++' - > /home/pi/device-drivers/native/export_symbol/modules.order
