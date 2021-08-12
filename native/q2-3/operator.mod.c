@@ -29,6 +29,7 @@ __used __section("__versions") = {
 	{ 0x5739ae8, "param_ops_charp" },
 	{ 0xadee4c82, "param_ops_int" },
 	{ 0xc5850110, "printk" },
+	{ 0xe2d5255a, "strcmp" },
 	{ 0xb1ad28e0, "__gnu_mcount_nc" },
 	{ 0x2196324, "__aeabi_idiv" },
 };
@@ -36,4 +37,4 @@ __used __section("__versions") = {
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "A2B104DDF1CEFE0095DDB50");
+MODULE_INFO(srcversion, "42AF22DAE134D5FD57CDF15");

@@ -9,9 +9,9 @@ MODULE_DESCRIPTION("A kernel module to take operator two integers and prints res
 int a=0;
 int b=0;
 static char* string="NO";
-static char* addp="Add";
-static char* subp="Sub";
-static char* mulp="Mul";
+static char* addp="add";
+static char* subp="sub";
+static char* mulp="mul";
 static char* divp="div";
 //parameter declaration
 module_param(string,charp,S_IRUGO);
@@ -41,22 +41,22 @@ static int div(int a,int b)
 static int hello_init(void)
 {
   int c;
-	if(*string==*addp)
+	if(strcmp(string,addp)==0)
 	{ 
 	c = add(a,b);
 	printk(KERN_ALERT "Addition of %d and %d is:%d\n",a,b,c);
 	}
-	else if(*string==*subp)
+	else if(strcmp(string,subp)==0)
 	{
 	c=sub(a,b);
 	printk(KERN_ALERT "Subtraction of %d and %d is:%d\n",a,b,c);
 	}
-	else if(*string==*mulp)
+	else if(strcmp(string,mulp)==0)
 	{
 	c=mul(a,b);
 	printk(KERN_ALERT "Multiplication of %d and %d is:%d\n",a,b,c);
 	}
-	else if(*string==*divp)
+	else if(strcmp(string,divp)==0)
 	{
 	c=div(a,b);
 	printk(KERN_ALERT "Division of %d and %d is:%d\n",a,b,c);
