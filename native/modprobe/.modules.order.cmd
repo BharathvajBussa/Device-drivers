@@ -1,0 +1,1 @@
+cmd_/home/pi/device-drivers/native/modprobe/modules.order := {   echo /home/pi/device-drivers/native/modprobe/add.ko;   echo /home/pi/device-drivers/native/modprobe/average.ko; :; } | awk '!x[$$0]++' - > /home/pi/device-drivers/native/modprobe/modules.order

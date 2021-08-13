@@ -1,0 +1,1 @@
+cmd_/home/pi/device-drivers/native/modprobe/add.ko := ld -r  -EL  --build-id=sha1  -T scripts/module.lds -o /home/pi/device-drivers/native/modprobe/add.ko /home/pi/device-drivers/native/modprobe/add.o /home/pi/device-drivers/native/modprobe/add.mod.o;  true
