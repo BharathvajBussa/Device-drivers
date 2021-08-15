@@ -107,13 +107,14 @@ ssize_t NAME_write(struct file *filep,const char __user *Ubuff,size_t count,loff
 //read function
 ssize_t NAME_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp)
 {
-	char Kbuff[]="Data from Kernel";
+	char Kbuff[]="Hello from Kernel";
 	unsigned long result;
 	ssize_t retval;
 	result=copy_to_user((char *)Ubuff,(char *)Kbuff,sizeof(Kbuff));
 	if(result==0)
 	{
 		printk(KERN_ALERT "\n Data read successfully\n");
+		printk(KERN_ALERT "\n Data read is <<<%s>>\n",Ubuff);
 		retval=count;
 		return retval;
 	}
