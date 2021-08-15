@@ -85,7 +85,22 @@ int NAME_release(struct inode *inode,struct file *filep)
 ssize_t NAME_write(struct file *filep,const char __user *Ubuff,size_t count,loff_t *offp)
 {
 	char Kbuff[80];
-	strcpy(Kbuff,Ubuff);
+	unsigned long result;
+	ssize_t retval;
+	result=copy_from_user((char *)Kbuff,(char *)Ubuff,count);
+	if(result==0)
+	{
+		printk(KERN_ALERT "\n data written successfully\n");
+		printk(KERN_ALERT "\n data written is \n <<%s>>\n",Kbuff);
+		retval=count;
+		return retval;
+	}
+	else
+	{
+		printk(KERN_ALERT "\n Error writing data\n");
+		retval=-EFAULT;
+		return retval;
+	}
 	return 0;
 }
 
@@ -93,8 +108,22 @@ ssize_t NAME_write(struct file *filep,const char __user *Ubuff,size_t count,loff
 ssize_t NAME_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp)
 {
 	char Kbuff[]="Data from Kernel";
-	strcpy(Ubuff,Kbuff);
-	return 0;
+	unsigned long result;
+	ssize_t retval;
+	result=copy_to_user((char *)Ubuff,(char *)Kbuff,sizeof(Kbuff));
+	if(result==0)
+	{
+		printk(KERN_ALERT "\n Data read successfully\n");
+		retval=count;
+		return retval;
+	}
+	else
+	{
+		printk(KERN_ALERT "\nError writing data	to user\n");
+		retval=-EFAULT;
+		return retval;
+	}
+
 }
 module_init(CharDevice_init);
 module_exit(CharDevice_exit);
