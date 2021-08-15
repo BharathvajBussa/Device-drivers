@@ -115,7 +115,7 @@ ssize_t NAME_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *off
 	{
 		printk(KERN_ALERT "\n Data read successfully\n");
 		printk(KERN_ALERT "\n Data read is <<<%s>>\n",Ubuff);
-		retval=count;
+		retval=sizeof(Kbuff);
 		return retval;
 	}
 	else
