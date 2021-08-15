@@ -8,6 +8,8 @@
 
 #define NAME MyCharDevice
 
+static dev_t Mydev;
+
 //function prototype
 int NAME_open(struct inode *inode,struct file *filep);
 int NAME_release(struct inode *inode,struct file *filep);
@@ -31,11 +33,10 @@ static int __init CharDevice_init(void)
 {
 	int result;
 	int MAJOR,MINOR;
-	dev_t Mydev;
+	result=alloc_chrdev_region(&Mydev,0,1,"MyCharDevice");//register device region
 	MAJOR=MAJOR(Mydev);
 	MINOR=MINOR(Mydev);
-	printk("Major number is %d\n Minor number is %d\n",MAJOR,MINOR);
-	result=alloc_chrdev_region(&Mydev,0,1,"MyCharDevice");//register device region
+	printk(KERN_ALERT "\n Major number is %d \n Minor number is %d\n",MAJOR,MINOR);  
 	if(result<0)
 	{
 		printk(KERN_ALERT "The Region requested is not obtainable\n");
@@ -57,10 +58,9 @@ static int __init CharDevice_init(void)
 void __exit CharDevice_exit(void)
 {
 	int MAJOR,MINOR;
-	dev_t Mydev;
 	MAJOR=MAJOR(Mydev);
 	MINOR=MINOR(Mydev);
-	printk("\n Major number is %d\n Minor number is %d\n",MAJOR,MINOR);
+	printk(KERN_ALERT "\n Major number is %d\n Minor number is %d\n",MAJOR,MINOR);
 	unregister_chrdev_region(Mydev,1);//unregister device number and device
 	cdev_del(my_cdev);
 	printk(KERN_ALERT "\nI have unregistered...\n");
@@ -112,6 +112,7 @@ ssize_t NAME_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *off
 	if(result==0)
 	{
 		printk(KERN_ALERT "\n Data read successfully\n");
+		printk(KERN_ALERT "\n <<<%s>>>\n",Ubuff);
 		retval=count;
 		return retval;
 	}
