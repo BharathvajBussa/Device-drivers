@@ -9,14 +9,12 @@ MODULE_DESCRIPTION("A kernel module to take operator two integers and prints res
 int a=0;
 int b=0;
 static char* string="NO";
-static char* addp="add";
-static char* subp="sub";
-static char* mulp="mul";
-static char* divp="div";
+
 //parameter declaration
 module_param(string,charp,S_IRUGO);
 module_param(a,int,S_IRUGO);
 module_param(b,int,S_IRUGO);
+
 //add function
 static int add(int a,int b)
 {
@@ -41,29 +39,29 @@ static int div(int a,int b)
 static int hello_init(void)
 {
   int c;
-	if(strcmp(string,addp)==0)
+	if(strcmp(string,"add")==0)
 	{ 
 	c = add(a,b);
 	printk(KERN_ALERT "Addition of %d and %d is:%d\n",a,b,c);
 	}
-	else if(strcmp(string,subp)==0)
+	else if(strcmp(string,"sub")==0)
 	{
 	c=sub(a,b);
 	printk(KERN_ALERT "Subtraction of %d and %d is:%d\n",a,b,c);
 	}
-	else if(strcmp(string,mulp)==0)
+	else if(strcmp(string,"mul")==0)
 	{
 	c=mul(a,b);
 	printk(KERN_ALERT "Multiplication of %d and %d is:%d\n",a,b,c);
 	}
-	else if(strcmp(string,divp)==0)
+	else if(strcmp(string,"div")==0)
 	{
 	c=div(a,b);
 	printk(KERN_ALERT "Division of %d and %d is:%d\n",a,b,c);
 	}
 	else
 	{
-	printk(KERN_ALERT "Invalid operator \n");
+	printk(KERN_ALERT "Invalid operator \n use add,sub,mul,div");
 	}
 return 0;
 }
