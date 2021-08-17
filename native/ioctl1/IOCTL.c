@@ -20,8 +20,6 @@ struct file_operations fops =
 {
 	.owner=THIS_MODULE,
 	.open=NAME_open,
-//	.read=NAME_read,
-//	.write=NAME_write,
 	.release=NAME_release,
 	.unlocked_ioctl=NAME_ioctl,
 };
@@ -36,11 +34,6 @@ dev_t Mydev=MKDEV(255,0);
 static int __init CharDevice_init(void)
 {
 	int result;
-	//int MAJOR,MINOR;
-	//dev_t Mydev;
-	//Mydev=MKDEV(255,0);//create a device number
-	//MAJOR=MAJOR(Mydev);
-	//MINOR=MINOR(Mydev);
 	printk("Major number is %d\n Minor number is %d\n",MAJOR(Mydev),MINOR(Mydev));
 	result=register_chrdev_region(Mydev,1,"MyCharDevice");//register device region
 	if(result<0)
@@ -63,11 +56,6 @@ static int __init CharDevice_init(void)
 
 void __exit CharDevice_exit(void)
 {
-	//int MAJOR,MINOR;
-	//dev_t Mydev;
-	//Mydev=MKDEV(255,0);
-	//MAJOR=MAJOR(Mydev);
-	//MINOR=MINOR(Mydev);
 	printk("\n Major number is %d\n Minor number is %d\n",MAJOR(Mydev),MINOR(Mydev));
 	unregister_chrdev_region(Mydev,1);//unregister device number and device
 	cdev_del(my_cdev);
