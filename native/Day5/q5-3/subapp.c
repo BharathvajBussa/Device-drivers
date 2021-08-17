@@ -8,7 +8,7 @@ int main()
 	int fd,x,y;
 	printf("\nenter two elements:");
 	scanf("%d %d",&x,&y);
-	fd=open("/dev/AddDev",O_RDWR,0777);
+	fd=open("/dev/SubDev",O_RDWR,0777);
 	if(fd<0)
 	{printf("\n<<error>>"); }
 	}
