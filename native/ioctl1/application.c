@@ -10,7 +10,7 @@ int main()
 {
 	int fd;
 	char opt;
-	long res;
+	int res;
 	fd=open("/dev/MyCharDevice",O_RDWR,0777);
 	if(fd<0)
 	{
