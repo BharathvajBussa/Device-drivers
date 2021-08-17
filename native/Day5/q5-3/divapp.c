@@ -11,7 +11,7 @@ int main()
 	fd=open("/dev/DivDev",O_RDWR,0777);
 	if(fd<0)
 	{printf("\n<<error>>"); }
-	}
+	
 	
 	printf("\n<<<use sudo dmesg to see result>>>\n");
 	close(fd);

@@ -1,4 +1,4 @@
-obj-m+=IOCTL.o
+obj-m+=caldriver.o
 KDIR=/lib/modules/$(shell uname -r)/build/
 PWD :=$(shell pwd)
 default:
