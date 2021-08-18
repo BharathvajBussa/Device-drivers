@@ -5,19 +5,43 @@
 #include<linux/fs.h>
 #include<linux/cdev.h>
 #include<linux/uaccess.h>
+#include"caldriver.h"
 
-#define NAME Operator
 
-//function prototype
-int NAME_open(struct inode *inode,struct file *filep);
-int NAME_release(struct inode *inode,struct file *filep);
+int za;
+int ud;
+int zb;
+int zc;
+int zd;
+//Add function prototype
+int Add_open(struct inode *inode,struct file *filep);
+int Add_release(struct inode *inode,struct file *filep);
+ssize_t Add_write(struct file *filep,const char __user *Ubuff,size_t count,loff_t *offp);
+ssize_t Add_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp);
+//Sub function prototypes
+int Sub_open(struct inode *inode,struct file *filep);
+int Sub_release(struct inode *inode,struct file *filep);
+ssize_t Sub_write(struct file *filep,const char __user *Ubuff,size_t count,loff_t *offp);
+ssize_t Sub_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp);
+//Mul function prototype
+int Mul_open(struct inode *inode,struct file *filep);
+int Mul_release(struct inode *inode,struct file *filep);
+ssize_t Mul_write(struct file *filep,const char __user *Ubuff,size_t count,loff_t *offp);
+ssize_t Mul_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp);
+//div function prototype
+int Div_open(struct inode *inode,struct file *filep);
+int Div_release(struct inode *inode,struct file *filep);
+ssize_t Div_write(struct file *filep,const char __user *Ubuff,size_t count,loff_t *offp);
+ssize_t Div_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp);
 
 //structure that stores operations provided by the driver
 struct file_operations fops =
 {
 	.owner=THIS_MODULE,
-	.open=NAME_open,	
-	.release=NAME_release,
+	.open=Add_open,
+	.read=Add_read,
+	.write=Add_write,	
+	.release=Add_release,
 };
 
 
@@ -59,18 +83,96 @@ void __exit CharDevice_exit(void)
 	cdev_del(my_cdev);
 	printk(KERN_ALERT "\nI have unregistered...\n");
 }
-
-//Open system call
-int NAME_open(struct inode *inode,struct file *filep)
+//add read function
+ssize_t Add_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp)
 {
-	printk(KERN_ALERT "\n In open system call\n");
+	unsigned long result;
+	ssize_t retval;
+	result=copy_to_user(&ud,&za,sizeof(za));
+	if(result==0)
+	{
+		printk(KERN_ALERT "\n Data read successfully\n");
+		retval=sizeof(za);
+		return retval;
+	}
+	else
+	{
+		printk(KERN_ALERT "\nError writing data	to user\n");
+		retval=-EFAULT;
+		return retval;
+	}
+
+}
+
+ssize_t Add_write(struct file *filep,const char __user *Ubuff,size_t count,loff_t *offp)
+{
+	unsigned long result;
+	ssize_t retval;
+	struct str kd;
+	result=copy_from_user(&kd,&ud,count);
+	if(result==0)
+	{	za=kd.x+kd.y;
+		printk(KERN_ALERT "\n Addition is %d \n",za);
+		retval=count;
+		return retval;
+	}
+	else
+	{
+		printk(KERN_ALERT "\n Error writing data\n");
+		retval=-EFAULT;
+		return retval;
+	}
+	return 0;
+}
+
+//Open system call 
+int Add_open(struct inode *inode,struct file *filep)
+{
+	printk(KERN_ALERT "\n In Add open system call\n");
 	return 0;
 }
 
 //close system call
-int NAME_release(struct inode *inode,struct file *filep)
+int Add_release(struct inode *inode,struct file *filep)
 {
-	printk(KERN_ALERT "\n In close system call\n");
+	printk(KERN_ALERT "\n In Add close system call\n");
+	return 0;
+}
+
+//sub open call
+int Sub_open(struct inode *inode,struct file *filep)
+{
+	printk(KERN_ALERT "\n In Sub open system call\n");
+	return 0;
+}
+//sub close call
+int Sub_release(struct inode *inode,struct file *filep)
+{
+	printk(KERN_ALERT "\n In Sub close system call\n");
+	return 0;
+}
+//mul open call
+int Mul_open(struct inode *inode,struct file *filep)
+{
+	printk(KERN_ALERT "\n In Mul open system call\n");
+	return 0;
+}
+//mul close call
+int Mul_release(struct inode *inode,struct file *filep)
+{
+	printk(KERN_ALERT "\n In Mul close system call\n");
+	return 0;
+}
+//div open call
+int Div_open(struct inode *inode,struct file *filep)
+{
+	printk(KERN_ALERT "\n In Div open system call\n");
+	return 0;
+}
+//div close call
+int Div_release(struct inode *inode,struct file *filep)
+{
+	printk(KERN_ALERT "\n In Div close system call\n");
 	return 0;
 }
 module_init(CharDevice_init);
@@ -78,4 +180,4 @@ module_exit(CharDevice_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Bharathvaj");
-MODULE_DESCRIPTION("a module to do operations passing a structure");
+MODULE_DESCRIPTION("a module to generate 4 device numbers and assign 1 arirthmetic operation to each device");
