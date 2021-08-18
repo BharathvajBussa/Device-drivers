@@ -31,6 +31,42 @@ ssize_t write_div(struct file *filep,const char __user *Ubuff,size_t count,loff_
 ssize_t read_div(struct file *filep,char __user *Ubuff,size_t count,loff_t *offp);
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
+//file operations structures
+struct file_operations fops_add=
+{
+	.owner = THIS_MODULE,
+	.open = open_add,
+	.read = read_add,
+	.write = write_add,
+	.release = release_add,
+};
+struct file_operations fops_sub=
+{
+	.owner = THIS_MODULE,
+	.open = open_sub,
+	.read = read_sub,
+	.write = write_sub,
+	.release = release_sub,
+};
+struct file_operations fops_mul=
+{
+	.owner = THIS_MODULE,
+	.open = open_mul,
+	.read = read_mul,
+	.write = write_mul,
+	.release = release_mul,
+};
+struct file_operations fops_div=
+{
+	.owner = THIS_MODULE,
+	.open = open_div,
+	.read = read_div,
+	.write = write_div,
+	.release = release_div,
+};
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+//character devices and device number
 struct cdev *AddDev;
 struct cdev *SubDev;
 struct cdev *MulDev;
@@ -40,6 +76,8 @@ dev_t add;
 dev_t sub;
 dev_t mul;
 dev_t div;
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 //init function
 static int __init calculator_init(void)
 {
@@ -67,21 +105,21 @@ static int __init calculator_init(void)
 		return(-1);
 	}
 	int res_sub;
-	res_sub=cdev_sub(SubDev,Mydev,1);
+	res_sub=cdev_add(SubDev,Mydev,1);
 	if(res_sub<0)
 	{
 		printk(KERN_ALERT "\nThe sub is not allocated\n");
 		return (-1);
 	}
 	int res_mul;
-	res_mul=cdev_mul(MulDev,Mydev,1);
+	res_mul=cdev_add(MulDev,Mydev,1);
 	if(res_mul<0)
 	{
 		printk(KERN_ALERT "\n The mul is not allocated\n");
 		return (-1);
 	}
 	int res_div;
-	res_div=cdev_div(DivDev,Mydev,1);
+	res_div=cdev_add(DivDev,Mydev,1);
 	if(res_div<0)
 	{
 		printk(KERN_ALERT "\n The div is not allocated\n");
@@ -196,7 +234,7 @@ static void calculator_clean(void)
 	cdev_del(DivDev);
 	cdev_del(Mydev);
 	//unregister from the kernel space
-	unregister_chrdev_region(my_device_number, 4);
+	unregister_chrdev_region(Mydev,4);
 	printk(KERN_ALERT "I have unregistered\n");
 }
 
