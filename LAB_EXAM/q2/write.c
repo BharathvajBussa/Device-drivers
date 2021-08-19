@@ -8,7 +8,7 @@ int main()
 	int fd;
 	char Ubuff[80];
 	fd=open("/dev/MyCharDevice",O_RDWR,0777);
-	printf("\n enter any string");
+	printf("\nEnter any string: ");
 	scanf("%s",Ubuff);
 	if(fd<0)
 	{
@@ -16,7 +16,7 @@ int main()
 		exit(1);
 	}
 	write(fd,Ubuff,sizeof(Ubuff));
-	printf("\n The data is written\n");
+	printf("\n The data is written to Kernel\n");
 	close(fd);
 	return 0;
 }

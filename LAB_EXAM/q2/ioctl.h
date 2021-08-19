@@ -6,4 +6,4 @@ struct stats{
 	int r_w;
 };
 
-#define GETSTATS _IO(MAGIC_NUMBER,8)
+#define GETSTATS _IOR(MAGIC_NUMBER,8,struct stats)

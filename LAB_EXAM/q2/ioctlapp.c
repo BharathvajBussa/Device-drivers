@@ -11,6 +11,7 @@ int main()
 	int fd;
 	char d;
 	int res;
+	struct stats udata;
 	fd=open("/dev/MyCharDevice",O_RDWR,0777);
 	if(fd<0)
 	{
@@ -21,13 +22,15 @@ int main()
 	scanf("%c",&d);
 	if(d=='y')
 	{
-		res=ioctl(fd,GETSTATS);
-		printf("\nuse sudo dmesg to see status");
+		res=ioctl(fd,GETSTATS,&udata);
+		/* printf("%d",udata.size); */
+		printf("\nuse sudo dmesg to see status\n");
 		return 0;
 	}
 	else
 	{
-		printf("\n application closed");
+		printf("\n Application closed");
 	}
+	close(fd);
 	return 0;
 }

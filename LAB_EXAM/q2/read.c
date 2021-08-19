@@ -10,7 +10,7 @@ int main()
 	fd=open("/dev/MyCharDevice",O_RDWR,0777);
 	if(fd<0)
 	{
-		printf("\n error opening device");
+		printf("\n Error opening device");
 		exit(1);
 	}
 	read(fd,Kbuff,50);

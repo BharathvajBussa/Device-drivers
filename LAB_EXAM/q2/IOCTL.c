@@ -143,10 +143,16 @@ ssize_t NAME_read(struct file *filep,char __user *Ubuff,size_t count,loff_t *off
 }
 
 static long NAME_ioctl(struct file *filep,unsigned int cmd,unsigned long arg)
-{
+{	int res;
+	struct stats udata;
 	switch(cmd)
 	{
 	case(GETSTATS):	
+		/* res=copy_to_user(&kdata,(struct stat *)arg,sizeof(arg));
+		 if(res==0)
+		 {printk(KERN_ALERT "\n Status sent to application successfully");
+		 }
+		 */
 		 printk(KERN_ALERT"\nSTATUS\n");
 		 printk(KERN_ALERT "\nData: %s ",kdata.buff);
 		 printk(KERN_ALERT "\nSize: %d ",kdata.size);
